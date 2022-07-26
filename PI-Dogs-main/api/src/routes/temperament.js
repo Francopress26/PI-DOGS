@@ -22,7 +22,16 @@ router.get("/", async (req,res)=>{
     Temperaments.forEach(temp =>{
        Temperament.findOrCreate({where:{name:temp}})
      })
-    const allTemperaments = await Temperament.findAll();
+    const allTemperaments = await Temperament.findAll({
+        order: [
+            // ['id', 'ASC'],
+            ['name', 'ASC'],
+        ],
+        attributes: {
+            include: ['name'], 
+            exclude:['createdAt', 'updatedAt','id']
+          }
+    });
     res.send(allTemperaments)
 })
 

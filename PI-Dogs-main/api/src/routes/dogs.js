@@ -17,7 +17,8 @@ const getApiInfo = async () =>{
             height:inf.height.metric,
             weight:inf.weight.metric,
             life_span:inf.life_span,
-            temperament:inf.temperament
+            temperament:inf.temperament,
+            image:inf.image.url
             
 
         }
@@ -108,18 +109,37 @@ router.get("/:id", async (req, res, next) => {
 
 
 router.post("/", async (req, res, next) => {
-    const {name,height,weight,life_span,temperament}=req.body
+    const {name,height,weight,life_span,temperaments,image}=req.body
+    console.log(`Tipo del temperament ${typeof temperaments}`)
         try {
-            createNewDog = await Dog.create({name, height, weight, life_span})
-            let TemperamentSplit=[]
-            TemperamentSplit=TemperamentSplit.concat(temperament.split(", "))
-            createNewDog.addTemperament() // Espera el ID del temperamento pero tengo que hacer que reciba el string
+            createNewDog = await Dog.create({name, height,weight, life_span,image})
+            // console.log(`TIPO DEL TEMPERAMENTO ${typeof(temperament)}`)
+            // console.log(`EL TEMPERAMENTO ${temperament}`)
+            if(typeof temperaments==="object"){
+                temperaments.forEach(async element => {
+                    console.log(`Elemento:${element}`)
+                    let actual= await Temperament.findOne({ where: { name:element }});
+                    createNewDog.addTemperament(actual.id)
+                     
+                });
+            }else{
+                for (let index = 0; index < temperaments.length; index++) {
+                    let actual2 = await Temperament.findOne({where:{name:temperaments[index]}})
+                    createNewDog.addTemperament(actual2.id)
+                    
+                }
+            }
+     
+         
+            // TemperamentSplit=TemperamentSplit.concat(TemperamentSplit.split(", "))
+            // createNewDog.addTemperament() // Espera el ID del temperamento pero tengo que hacer que reciba el string
             //Podria hacer un arreglo de las strings, buscar cada elemento del arreglo en la BD de temperamentos y una vez lo encuentro
             // preguntar por el id? Guardar todos los id en otro arreglo y despues con un for ir agregando ?
-            for (let index = 0; index < TemperamentSplit.length; index++) {
-               let actual= await Temperament.findOne({ where: { name:TemperamentSplit[index] } });
-                 createNewDog.addTemperament(actual.id)
-            }           
+            // for (let index = 0; index < TemperamentSplit.length; index++) {
+            // //    let actual= await Temperament.findOne({ where: { name:TemperamentSplit[index] } });
+            // //      createNewDog.addTemperament(actual.id)
+            // }  
+                   
         } catch (error) {
             next(error)
         }

@@ -103,26 +103,28 @@ __IMPORTANTE__: No se permitirá utilizar librerías externas para aplicar estil
 
 Se debe desarrollar una aplicación de React/Redux que contenga las siguientes pantallas/rutas.
 
-__Pagina inicial__: deben armar una landing page con
+__Pagina inicial__: deben armar una landing page con   --LISTO
 
 - [ ] Alguna imagen de fondo representativa al proyecto
 - [ ] Botón para ingresar al home (`Ruta principal`)
 
 __Ruta principal__: debe contener
 
-- [ ] Input de búsqueda para encontrar razas de perros por nombre
+- [ ] Input de búsqueda para encontrar razas de perros por nombre  --SEARCH BAR
 - [ ] Área donde se verá el listado de razas de perros. Deberá mostrar su:
   - Imagen
   - Nombre
   - Temperamento
-  - Peso
-- [ ] Botones/Opciones para filtrar por:
+  - Peso                            ---GET INICIAL(PARCIALMENTE LISTO)
+
+
+- [ ] Botones/Opciones para filtrar por:  --PROXIMO POR HACER
   - Temperamento
   - Raza existente (es decir las que vienen de la API) o agregada por nosotros (creadas mediante el form)
 - [ ] Botones/Opciones para ordenar tanto ascendentemente como descendentemente las razas de perro por:
   - Orden alfabético
   - Peso
-- [ ] Paginado para ir buscando y mostrando las siguientes razas, mostrando 8 razas por página.
+- [ ] Paginado para ir buscando y mostrando las siguientes razas, mostrando 8 razas por página. 
 
 __IMPORTANTE__: Dentro de la Ruta Principal se deben mostrar tanto las razas de perros traidas desde la API como así también las de la base de datos, pero NO está permitido almacenar en la base de datos las razas de perros de la API sino que solamente se pueden guardar aquellas creadas desde el form.
 
