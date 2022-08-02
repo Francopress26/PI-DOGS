@@ -12,10 +12,26 @@ const {API_KEY}=process.env;
 const getApiInfo = async () =>{
     const apiURL= await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
     const apiInfo = await apiURL.data.map(inf =>{
+        function validate(){
+            if(inf.weight.metric ==="NaN"){
+                return "25-40"
+            }else if(inf.weight.metric.includes("NaN")){
+              let split=  inf.weight.metric.split("-")
+              if(split[0]="NaN"){
+                return split[1]
+              }else if(split[1]="NaN"){
+                return split[0]
+              }
+            }else{
+                return inf.weight.metric
+            }
+        }
+        
         return{
+            id:inf.id,
             name:inf.name,
             height:inf.height.metric,
-            weight:inf.weight.metric,
+            weight:validate(),
             life_span:inf.life_span,
             temperament:inf.temperament,
             image:inf.image.url
@@ -47,7 +63,18 @@ const getDBInfo = async ()=>{
 const unificateAllInfo = async () =>{
     const apiInfo=await getApiInfo();
     const DBInfo= await getDBInfo();
-    const allInfo=apiInfo.concat(DBInfo);
+ 
+    // // const allInfo=apiInfo.concat(DBInfo);
+    // const datos=DBInfo.map(e=>e &&{
+    //     id:e.id,
+    //     name:e.name,
+    //     life_span:e.life_span,
+    //     height:e.height,
+    //     weight:e.weight,
+    //     temperaments:e.temperaments.map(e=>e.name)
+    // })
+   
+    let allInfo=[...apiInfo,...DBInfo]
     return allInfo;
 
 }
@@ -56,19 +83,28 @@ router.get('/', async (req,res)=>{
  const name = req.query.name
  let AllDogs=await unificateAllInfo()
     if(name){
-        let AllDogsByName = await AllDogs.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()))
-        AllDogsByName.length ? 
-        res.status(200).send(AllDogsByName)
-        :
-        res.status(404).send("No se encontraron perros con ese nombre") 
+        try{
+            let AllDogsByName = await AllDogs.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()))
+            AllDogsByName.length ? 
+            res.status(200).send(AllDogsByName)
+            :
+            res.status(404).send("No se encontraron perros con ese nombre") 
+        }catch(e){
+            
+            res.status(400).send("Not found :(((")
+            next(error)
+        }
+  
     }else{
-        
         res.status(200).send(AllDogs)
     }
 })
 
 router.get("/:id", async (req, res, next) => {
     let id =req.params.id
+    console.log(id)
+    console.log(typeof id)
+    console.log(id.length)
 
     if(id.length<4){ // como es una string, la api no tiene mas de 1000 perros entonces la id nunca va a superar las 4 cifras
 
@@ -82,16 +118,37 @@ router.get("/:id", async (req, res, next) => {
             
       
 
-    }else{
-        const dogById= await Dog.findByPk(id)
-            if(dogById){
-                res.status(200).json(dogById)
+    }else if(id.length>4){
+        let dogById= await  Dog.findAll({
+            // Busca todos los perros de la BD y ademas incluye el model Temperament
+          include: {
+            model: Temperament,
+              attributes: {
+                include: ['name',], 
+                exclude:['createdAt', 'updatedAt','id']
+              },
+              through: {
+                attributes:[]
+              }
+          }
+         
+        })
+
+        const dogFinded2=await dogById.find(dog=>dog.id===id)
+        
+        const temperamentFilt= dogFinded2.temperaments.map(e=>e.name)
+        dogFinded2.temperaments=temperamentFilt
+        console.log(dogFinded2.temperaments)
+            if(dogFinded2){
+                res.status(200).json(dogFinded2)
             }else{
                 res.status(404).send("Dog not found :(")
             }
      
       
        
+    }else{
+        res.status(404).send("Dog not found")
     }
 
    
@@ -117,7 +174,7 @@ router.post("/", async (req, res, next) => {
             // console.log(`EL TEMPERAMENTO ${temperament}`)
             if(typeof temperaments==="object"){
                 temperaments.forEach(async element => {
-                    console.log(`Elemento:${element}`)
+                    // console.log(`Elemento:${element}`)
                     let actual= await Temperament.findOne({ where: { name:element }});
                     createNewDog.addTemperament(actual.id)
                      

@@ -1,4 +1,4 @@
-import {GET_ALL_DOGS,ORDER_BY_NAME,ORDER_BY_BD,GET_DOG_NAME,GET_TEMPS,CREATE_DOG} from "../actions";
+import {GET_ALL_DOGS,ORDER_BY_NAME,ORDER_BY_BD,GET_DOG_NAME,GET_TEMPS,CREATE_DOG,GET_DETAIL,ORDER_BY_TEMPS, ORDER_BY_WEIGHT,CLEAR_DOG} from "../actions";
 
 const initialState = {
     allDogs: [],
@@ -10,10 +10,11 @@ const initialState = {
 function rootReducer(state = initialState, action) {
     switch (action.type) {
         case GET_ALL_DOGS:
+           
             return {
                 ...state,
                 allDogs: action.payload,
-                allDogs2:action.payload
+                allDogs2:action.payload,
             };
         case ORDER_BY_NAME:
             let dogSorted = action.payload==="Asc" ?
@@ -34,13 +35,51 @@ function rootReducer(state = initialState, action) {
                 
 
             }
+        case ORDER_BY_WEIGHT:
+            let dogSorted2=action.payload==="orderHEAVY" ?
+         
+            state.allDogs.sort((b, a) => {
+                if (parseInt(a.weight)> parseInt(b.weight)) return 1;
+               if (parseInt(a.weight) <parseInt(b.weight)) return -1;
+               return 0;
+           })
+           :
+           state.allDogs.sort((a,b)=> {
+                
+            if (parseInt(a.weight) > parseInt(b.weight)) return 1;
+            if (parseInt(a.weight)< parseInt(b.weight)) return -1;
+            return 0;
+            })
+            return{
+                ...state,
+                allDogs:dogSorted2
+            }
         case ORDER_BY_BD:
-            const allDogss=state.allDogs2
-            const orderCreated=action.payload==="orderBD" ? allDogss.filter(el=>el.createdAt) : allDogss.filter(el=>!el.createdAt)
+
+            const orderCreated=action.payload==="orderBD" ? state.allDogs2.filter(el=>el.createdAt) : state.allDogs2.filter(el=>!el.createdAt)
             
             return{
                 ...state,
-                allDogs: action.payload ==="orderALL" ? state.allDogs2 : orderCreated
+                allDogs: action.payload ==="orderALL" ?  Array.from(new Set(state.allDogs.concat(state.allDogs2))) : orderCreated
+            }
+        case ORDER_BY_TEMPS:    
+            let dogsFiltered = [];
+            state.allDogs2?.forEach((e) => {
+                if (e.id.length>5) {
+                    e.temperaments.map((t) => (
+                        t.name === action.payload ? dogsFiltered.push(e) : null
+                ))
+                } else {
+                    if (e.temperament?.includes(action.payload)) {
+                        dogsFiltered.push(e);
+                    }
+                }
+            })
+               
+                
+            return{
+                ...state,
+                allDogs:dogsFiltered
             }
         case GET_DOG_NAME:
             return{
@@ -57,6 +96,17 @@ function rootReducer(state = initialState, action) {
                 temperaments:action.payload
                 
             }   
+        case GET_DETAIL:
+            console.log( typeof action.payload)
+            return{
+                ...state,
+                dogDetail:action.payload
+            }
+        case CLEAR_DOG:
+            return{
+                ...state,
+                dogDetail:[]
+            }
         default:
             return state;
     }

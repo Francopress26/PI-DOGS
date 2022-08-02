@@ -1,29 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-
+import icon from "../imgs/icons8-guide-dog-96.png"
+import style from "./Nav.module.css"
 
 export default function Nav(){
     return(
-        // Icono
+   
+        <nav className={style.nav}>
+            <img src={icon} alt="jaja" className={style.icon}/>
+            
+            
+            <Link to="/home" className={style.link}>Home🐶</Link>
+            
 
-        // Link a home 
 
-        // Drop down de show perros
-
-        // About 
-
-        // <SearchBar>
-        <nav>
-            <div>
-            <Link to="/home"><img src="C:\Users\franc\Desktop\PI-DOGS\PI-Dogs-main\client\public\favicon.ico" alt="icono"></img></Link>
-            </div>
-           
-           <div>
-            <Link to = "/dogs"> 
-                <button >Create a dog</button>
+          
+            <Link to = "/createDog" className={style.link}> 
+                Create a dog
             </Link>
-            </div>
+          
+
+
+          <Link to="/About" className={style.link}>About</Link>
+
+
+          <Link to="/" className={style.link}>Log out</Link>
+
+          
 
             
         </nav>

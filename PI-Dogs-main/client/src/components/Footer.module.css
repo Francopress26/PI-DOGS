@@ -1,0 +1,22 @@
+.footer{
+    background-color: rgb(38, 37, 49);;
+    margin-top: 6vh;
+    position: absolute;
+    height: 120px;
+    width: 100%;
+}
+h4{
+    color: white;
+    font-size: 15px;
+}
+.skills img{
+    width: 40px;
+    height: 40px;
+    margin-left: 3vh;
+}
+.skills{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
