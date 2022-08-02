@@ -14,7 +14,7 @@ export function getDogs() {
     return async function(dispatch) {
         try{
             var json = await axios.get('http://localhost:3001/dogs');
-                json.then()
+              
         }catch(e){
             return e
         }
