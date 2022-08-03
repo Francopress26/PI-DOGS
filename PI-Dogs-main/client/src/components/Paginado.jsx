@@ -1,7 +1,7 @@
 import React from 'react';
 import style from "./Paginado.module.css"
 
-export default function Paginado({dogsXPage,allDogs,paginado,currentPage,setCurrentPage}){
+export default function Paginado({dogsXPage,allDogs,paginado}){
     const pageNumbers=[]
 
 
@@ -10,20 +10,12 @@ export default function Paginado({dogsXPage,allDogs,paginado,currentPage,setCurr
         
     }
 
-    function handlePage(e){
-        if(e.target.value==="prev" && currentPage>1){
-            setCurrentPage(currentPage-1)
-        }
-        if(e.target.value==="next" && currentPage < pageNumbers.length){
-            setCurrentPage(currentPage+1)
-        }
-    }
+
 
     return(
 
         
-            <div >
-                <button value="prev" onClick={e=>handlePage(e) }>←</button>
+            <div > 
                 {   pageNumbers &&
                     pageNumbers.map(num=>(
                         <span key={num} className={style.span}>
@@ -33,7 +25,6 @@ export default function Paginado({dogsXPage,allDogs,paginado,currentPage,setCurr
                         </span>
                     ))
                 }
-                <button value="next" onClick={e=>handlePage(e) }>→</button>
             </div>
         
     )

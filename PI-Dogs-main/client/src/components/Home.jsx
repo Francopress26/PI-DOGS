@@ -25,9 +25,7 @@ export default function Home(){
     const indexOfFirstDog = indexOfLastDog - dogsXPage
     const currentDogs = allDogs.slice(indexOfFirstDog,indexOfLastDog)
     const [orden,setOrden]=useState("")
-    const [loading,setLoading]=useState(false)
-    
-
+   
 
     const paginado=(pageNumber)=>{
         setCurrentPage(pageNumber)
@@ -35,13 +33,15 @@ export default function Home(){
    
 
     useEffect(()=>{
-        setLoading(true)
         dispatch(getDogs())
-        setLoading(false)
     },[dispatch])
+
+
     useEffect(()=>{
         dispatch(getTemperaments())
     },[dispatch])
+
+    
     useEffect(()=>{
         dispatch(clearDog())
     })
@@ -53,23 +53,21 @@ export default function Home(){
         setOrden(e.target.value)  
     }
 
-    function handleCreatedBy(e){
+    function handleCreatedBy(e){ 
         e.preventDefault();
         dispatch(filterCreated(e.target.value))
         setCurrentPage(1);
         setOrden(`${e.target.value}`)
         
     }
+
     function handleTemperaments(e){
         e.preventDefault()
         dispatch(orderByTemps(e.target.value))
         setCurrentPage(1);
         setOrden(`${e.target.value}`)
     }
-    // function handleReload(){
-    //     dispatch(getDogs())
-        
-    // }
+  
     function handleWeights(e){
         e.preventDefault();
         dispatch(orderByWeight(e.target.value))
@@ -77,14 +75,15 @@ export default function Home(){
         setOrden(`${e.target.value}`)
     }
 
+ 
    
     return(
         <React.Fragment>
             <header>
             <Nav></Nav>
             </header>
-
             <main className={style.main}>
+
 
             <div className={style.search}>
             <SearchBar className={style.search}/>
@@ -92,16 +91,11 @@ export default function Home(){
 
 
             <div className={style.filters}>
-
-           
-
-
             <select onChange={e=>handleFilterNames(e)} className={style.select}>
-            <option hidden selected>Alphabetic order:</option>
+                <option hidden selected>Alphabetic order:</option>
                 <option value="Asc" key="asc">Order A-Z</option>
                 <option value="Desc" key="desc">Order Z-A</option>
             </select>
-
 
             <select onChange={e=> handleTemperaments(e)} className={style.select}>
             <option hidden selected>Order by temperament</option>
@@ -130,34 +124,17 @@ export default function Home(){
 
 
             <div className={style.paginado}>
-                {/* <button value="prev" onClick={e=>handlePage(e) }>←</button> */}
             <Paginado 
             dogsXPage={dogsXPage} 
             allDogs={allDogs.length} 
             paginado={paginado}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
             />
-            {/* <button value="next" onClick={e=>handlePage(e) }>→</button> */}
             </div>
            
             <div className={style.dogs2}>
 
-            {/* {currentDogs ? currentDogs.map((el)=>{
-                return (
-                    <div className={style.dogs}>   
-                       <Dog image={el.image ? el.image : imagen} name={el.name} temperament={el.createdAt ? el.temperaments.map((e)=> e.name.toString()+(", ")) : el.temperament } weight={el.weight} id={el.id} className={style.cardDog}/>
-                    </div>
-                   
-                 )
-            }) 
-            : (<h1>Not found</h1>)
-
-            } */}
-            {loading ? 
-            <h1>No anda</h1>
-            :
-            currentDogs.map((el)=>{
+            {
+            currentDogs?.map((el)=>{
                 return (
                     <div className={style.dogs} key={el.id}>   
                        <Dog image={el.image ? el.image : imagen} name={el.name} temperament={el.createdAt ? el.temperaments.map((e)=> e.name.toString()+(", ")) : el.temperament } weight={el.weight} id={el.id} className={style.cardDog}/>
@@ -168,8 +145,7 @@ export default function Home(){
             }
             </div>
             </main>
-            {/* OrderBy */}
-            {/* Render Dogs */}
+          
             
             <Footer></Footer>
 

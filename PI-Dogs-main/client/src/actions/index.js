@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export const GET_ALL_DOGS = "GET_ALL_DOGS";
 export const GET_DETAIL = "GET_DETAIL";
 export const CREATE_DOG = "CREATE_DOG";
@@ -9,7 +10,8 @@ export const ORDER_BY_BD="ORDER_BY_CREATED"
 export const GET_DOG_NAME="GET_DOG_NAME"
 export const ORDER_BY_TEMPS="ORDER_BY_TEMPS"
 export const ORDER_BY_WEIGHT="ORDER_BY_WEIGHT"
-export const CLEAR_DOG="CLEAR_DOG"
+export const CLEAR_DOG="CLEAR_DOG" 
+
 export function getDogs() {
     return async function(dispatch) {
         try{
@@ -83,12 +85,17 @@ export function postDog(payload){
 }
 export function getDetail(id){
     return async function(dispatch){
+        try {
             var json = await axios.get('http://localhost:3001/dogs/' + id)
-            console.log(json.data)
             return dispatch({
                 type:GET_DETAIL,
                 payload:json.data
-            })
+            })  
+        } catch (error) {
+            alert("Dog not found :(")
+            
+        }
+          
         }
 }
 
@@ -104,3 +111,5 @@ export function clearDog(){
         type:CLEAR_DOG
     }
 }
+
+

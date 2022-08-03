@@ -16,7 +16,7 @@ function App() {
     <Route exact path = "/home" component = {Home}/>
     <Route exact path="/dogs" component={DogDetail}/>
     <Route exact path ="/createDog" component={CreateDog}/>
-    <Route path = "/dogs/:id" component={DogDetail}/>
+    <Route exact path = "/dogs/:id" component={DogDetail}/>
     <Route exact path="/About" component={About}/>
 
     <Route component={NotFound}/>
