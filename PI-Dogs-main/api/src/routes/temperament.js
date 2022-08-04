@@ -24,7 +24,6 @@ router.get("/", async (req,res)=>{
      })
     const allTemperaments = await Temperament.findAll({
         order: [
-            // ['id', 'ASC'],
             ['name', 'ASC'],
         ],
         attributes: {

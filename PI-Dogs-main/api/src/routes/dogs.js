@@ -66,6 +66,8 @@ const unificateAllInfo = async () =>{
 }
 
 
+
+
 router.get('/', async (req,res)=>{
  // name x query || si no me pasan name hago el get normal, asi me ahorro 1 ruta
  const name = req.query.name
@@ -85,6 +87,8 @@ router.get('/', async (req,res)=>{
         res.status(200).send(AllDogs)
     }
 })
+
+
 
 router.get("/:id", async (req, res, next) => {
     let id =req.params.id

@@ -78,3 +78,14 @@
    height:500px;
    border:2px solid white;
 }
+
+.loader{
+    border-radius: 50%;
+}
+
+.load{
+    height: 750px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

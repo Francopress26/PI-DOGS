@@ -2,7 +2,7 @@ import React from "react";
 import {useState,useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { Link } from 'react-router-dom'
-import { getDogs,orderByName,filterCreated,orderByTemps,getTemperaments, orderByWeight,clearDog } from "../actions";
+import { getDogs,orderByName,filterCreated,orderByTemps,getTemperaments, orderByWeight,clearDog} from "../actions";
 import Nav from "./Nav"
 import Dog from "./Dog"
 import Paginado from "./Paginado"
@@ -75,6 +75,7 @@ export default function Home(){
         setOrden(`${e.target.value}`)
     }
 
+  
  
    
     return(
@@ -118,6 +119,7 @@ export default function Home(){
                     <option value="orderAPI" key="api">Show API dogs</option> 
                     <option value="orderBD" key="bd">Show BD dogs</option> 
             </select>
+
 
             <button onClick={() => window.location.reload()} className={style.button}>Reload</button>
             </div>

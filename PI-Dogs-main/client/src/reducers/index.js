@@ -113,7 +113,6 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 dogDetail:[]
             }
-      
         default:
             return state;
     }

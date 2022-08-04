@@ -8,6 +8,7 @@ import style from "./DogDetail.module.css"
 import undraw from "../imgs/undraw_good_doggy_re_eet7.svg"
 import Nav from "./Nav"
 import Footer from './Footer';
+import loader from "../imgs/loading-thinking.gif"
 export default function Detail(){
     const dispatch= useDispatch()
     const {id}=useParams()
@@ -61,7 +62,7 @@ export default function Detail(){
            
        
         }else{
-            return(<h1>Loading...</h1>)
+            return(<div className={style.load}><img src={loader}alt="loader" className={style.loader}></img></div>)
         }
     }
     
