@@ -1,11 +1,13 @@
 .footer{
     background-color: rgb(38, 37, 49);;
-    margin-top: 6vh;
-    position: absolute;
-    height: 120px;
+  
+    /* position: absolute; */
+    
     width: 100%;
+    padding-bottom: 1vh;
 }
 h4{
+    text-align: center;
     color: white;
     font-size: 15px;
 }

@@ -97,8 +97,9 @@ router.get("/:id", async (req, res, next) => {
     // console.log(id.length)
 
     if(id.length<5){ // como es una string, la api no tiene mas de 1000 perros entonces la id nunca va a superar las 4 cifras
-          const dogsById = await axios.get(`https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`)
-          const dogFinded=dogsById.data.find(dog => dog.id === parseInt(id))
+          const dogsById = await getApiInfo()
+          
+          const dogFinded=dogsById.find(dog => dog.id === parseInt(id))
             if(dogFinded){
                 res.status(200).json(dogFinded)
             }else{

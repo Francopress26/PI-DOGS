@@ -42,7 +42,7 @@ export default function About(){
             <p>Mail francopress26@hotmail.com <img src={mail} alt="mail" width="30px" height="30px"/></p>
             </div>
 
-            <Footer></Footer>
+            
         </React.Fragment>
             
 

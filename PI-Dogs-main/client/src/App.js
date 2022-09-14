@@ -6,6 +6,7 @@ import DogDetail from "./components/DogDetail"
 import CreateDog from "./components/CreateDog"
 import NotFound from './components/NotFound';
 import About from './components/About';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -23,7 +24,9 @@ function App() {
     </Switch>
         
     </div>
+    <Footer></Footer>
     </BrowserRouter>
+    
   );
 }
 

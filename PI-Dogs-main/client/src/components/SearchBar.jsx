@@ -3,7 +3,9 @@ import {useState,useRef} from 'react'
  import { useDispatch } from "react-redux";
  import { searchDog } from "../actions";
 import styles from "./SearchBar.module.css"
-
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 export default function SearchBar(){
 
     const dispatch= useDispatch();
@@ -20,22 +22,30 @@ export default function SearchBar(){
     function handleSubmit(e){
         e.preventDefault() 
         dispatch(searchDog(name))
-        
-        ref.current.value = '';
-       
      }
 
 
     return (
-        <div>
+        <Box
+        sx={{
+          display: 'flex',
+          
+          '& > :not(style)': { m: 1 },
+          alignItems:'flex-end',
+          justifyContent:'flex-end',
+          alignSelf:'flex-end',
+          justifySelf:'end'
+
+        }}
+      >
             
-            <form>
+            <TextField id="standard-basic" label="Breed" variant="standard" onChange={(e) => handleChange(e)} />
+                {/* <input  ref={ref} type="text" placeholder="Insert a breed..."  onChange={(e) => handleChange(e)} className={styles.input}/> */}
+                <Button variant="contained" onClick={(e) => handleSubmit(e)}>Search</Button>
 
-                <input  ref={ref} type="text" placeholder="Insert a breed..."  onChange={(e) => handleChange(e)} className={styles.input}/>
-
-                <button  type="submit" onClick={(e) => handleSubmit(e)} className={styles.button}>Search</button>
-            </form>
-        </div>
+                {/* <button  type="submit" onClick={(e) => handleSubmit(e)} className={styles.button}>Search</button> */}
+            
+        </Box>
     )
 
 }

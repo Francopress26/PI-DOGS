@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 
 function Landing(){ 
     return (
-        <React.Fragment>
+        
             
         <div className={style.background}>
 
@@ -37,9 +37,7 @@ function Landing(){
            
         </div>
 
-        
-        {/* <Footer className={style.footer}></Footer> */}
-        </React.Fragment>
+      
     )
 }
 

@@ -1,6 +1,4 @@
-.sarch{
-   
-}
+
 .main{
     display: flex;
     flex-direction: column;
@@ -104,3 +102,13 @@
     display: flex;
      justify-content: center;
   }
+  .loader{
+    border-radius: 50%;
+}
+
+.load{
+    height: 750px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

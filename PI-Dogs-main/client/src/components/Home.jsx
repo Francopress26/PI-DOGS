@@ -5,12 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { getDogs,orderByName,filterCreated,orderByTemps,getTemperaments, orderByWeight,clearDog} from "../actions";
 import Nav from "./Nav"
 import Dog from "./Dog"
-import Paginado from "./Paginado"
+
 import SearchBar from "./SearchBar";
 import imagen from "../imgs/dog-7205842_1920.jpg"
-
+import loader from "../imgs/loading-thinking.gif"
 import style from "./Home.module.css"
 import Footer from "./Footer"
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 
 
@@ -19,11 +21,17 @@ export default function Home(){
     const dispatch = useDispatch();
     const allDogs = useSelector((state)=> state.allDogs)
     const allTemps= useSelector((state)=>state.temperaments)
-    const [currentPage,setCurrentPage]=useState(1)
-    const [dogsXPage,setDogsXPage]=useState(8)
-    const indexOfLastDog = currentPage * dogsXPage
-    const indexOfFirstDog = indexOfLastDog - dogsXPage
-    const currentDogs = allDogs.slice(indexOfFirstDog,indexOfLastDog)
+    // const [currentPage,setCurrentPage]=useState(1)
+    // const [dogsXPage,setDogsXPage]=useState(8)
+    
+
+    
+    const [currentPage, setCurrentPage] = useState(1);
+  const DogPerPage = 8;
+  const indexOfLastDog = currentPage * DogPerPage
+    const indexOfFirstDog = indexOfLastDog - DogPerPage
+     let currentDogs = allDogs.slice(indexOfFirstDog,indexOfLastDog)
+     const totalPage = Math.ceil(allDogs.length / DogPerPage);
     const [orden,setOrden]=useState("")
    
 
@@ -45,7 +53,6 @@ export default function Home(){
     useEffect(()=>{
         dispatch(clearDog())
     })
-
     function handleFilterNames(e){
         e.preventDefault();
         dispatch(orderByName(e.target.value))
@@ -86,9 +93,8 @@ export default function Home(){
             <main className={style.main}>
 
 
-            <div className={style.search}>
             <SearchBar className={style.search}/>
-            </div>
+          
 
 
             <div className={style.filters}>
@@ -97,6 +103,12 @@ export default function Home(){
                 <option value="Asc" key="asc">Order A-Z</option>
                 <option value="Desc" key="desc">Order Z-A</option>
             </select>
+            
+
+
+
+
+
 
             <select onChange={e=> handleTemperaments(e)} className={style.select}>
             <option hidden selected>Order by temperament</option>
@@ -126,30 +138,27 @@ export default function Home(){
 
 
             <div className={style.paginado}>
-            <Paginado 
-            dogsXPage={dogsXPage} 
-            allDogs={allDogs.length} 
-            paginado={paginado}
-            />
+            <Pagination count={totalPage} color="primary"  onChange={(e, value) => setCurrentPage(value)} />
             </div>
            
             <div className={style.dogs2}>
 
             {
-            currentDogs?.map((el)=>{
-                return (
-                    <div className={style.dogs} key={el.id}>   
-                       <Dog image={el.image ? el.image : imagen} name={el.name} temperament={el.createdAt ? el.temperaments.map((e)=> e.name.toString()+(", ")) : el.temperament } weight={el.weight} id={el.id} className={style.cardDog}/>
-                    </div>
-                   
-                 )
-            }) 
+            !currentDogs.length >0 ? 
+            <div className={style.load}><img src={loader}alt="loader" className={style.loader}></img></div>
+            :
+            currentDogs.map((el)=>{   
+                return(    
+                <div className={style.dogs} key={el.id}>   
+                   <Dog image={el.image ? el.image : imagen} name={el.name} temperament={el.createdAt ? el.temperaments.map((e)=> e.name.toString()+(", ")) : el.temperament } weight={el.weight} id={el.id} className={style.cardDog}/>
+                </div>  )  
+        })  
             }
             </div>
             </main>
           
             
-            <Footer></Footer>
+       
 
         </React.Fragment>
     )

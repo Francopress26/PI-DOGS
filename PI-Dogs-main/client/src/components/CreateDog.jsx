@@ -242,7 +242,7 @@ export default function CreateDog(){
 
         </div>
 
-        <Footer></Footer>
+        
         </React.Fragment>
     )
 
