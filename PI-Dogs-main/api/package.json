@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "react-scripts start",
-    "start": "serve -s build",
+    "start": "nodemon -L",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "mocha -w ./tests/**/*.spec.js",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
     },
