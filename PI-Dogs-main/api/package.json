@@ -4,13 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "react-scripts start",
     "start": "nodemon -L",
-    "build": "react-scripts build",
-    "test": "mocha -w ./tests/**/*.spec.js",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
-    },
+    "test": "mocha -w ./tests/**/*.spec.js"
+  },
   "author": "Henry",
   "license": "ISC",
   "engines": {
