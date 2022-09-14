@@ -30,8 +30,8 @@ const sequelize =
         ssl: true,
       })
     : new Sequelize(
-      "postgres://yeibjham:bwura8uzawWTEV58OM3Jq1KmYzmZo4aA@kesavan.db.elephantsql.com/yeibjham",
-        // `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
+      // "postgres://yeibjham:bwura8uzawWTEV58OM3Jq1KmYzmZo4aA@kesavan.db.elephantsql.com/yeibjham",
+        `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
         { logging: false }
       );
 
